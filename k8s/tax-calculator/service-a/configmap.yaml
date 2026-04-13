@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tax-config
+data:
+  TAX_SERVICE_URL: "http://service-b:4000/"
+  PORT: "3000"

@@ -1,0 +1,50 @@
+# -------------------------------
+# Deployment for web
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-b
+  labels:
+    app: service-b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-b
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: service-b
+    spec:
+      containers:
+      - name: service-b
+        image: embarkx/tax-service-b:latest
+        resources: {}
+        env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: tax-config
+                key: PORT
+
+---
+
+# -------------------------------
+# Service for web
+# -------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-b
+  labels:
+    app: service-b
+spec:
+  type: ClusterIP
+  selector:
+    app: service-b
+  ports:
+  - port: 4000       # port exposed by the service
+    targetPort: 4000   # port on the container
+    protocol: TCP

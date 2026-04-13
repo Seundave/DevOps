@@ -1,0 +1,55 @@
+# -------------------------------
+# Deployment for web
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources: {}
+        env:
+          - name: ENV_VALUE
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: ENV_VALUE
+          - name: PORT
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: PORT
+
+---
+
+# -------------------------------
+# Service for web
+# -------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  type: ClusterIP
+  selector:
+    app: web
+  ports:
+  - port: 80         # port exposed by the service
+    targetPort: 80   # port on the container
+    protocol: TCP

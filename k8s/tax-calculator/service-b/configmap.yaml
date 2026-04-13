@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tax-config
+data:
+  PORT: "4000"
+  TAX_SERVICE_URL: "https://tax.example.com"
