@@ -44,4 +44,4 @@ jobs:
         with:
           context: docker/app.hello/node
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/hello-node:latest 
+          tags: ${{ secrets.DOCKER_USERNAME }}/hello-node:latest
