@@ -2,7 +2,6 @@ name: Hello Node CI
 
 on:
   push:
-    # path: ""
   workflow_dispatch:
 
 jobs:
@@ -11,10 +10,10 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
           node-version: "24"
 
@@ -32,18 +31,17 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v4
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v7
-        with: 
-        context: docker/app.hello/node
+        uses: docker/build-push-action@v5
+        with:
+          context: docker/app.hello/node
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/hello-node:latest
-        
